@@ -118,6 +118,7 @@ void arctis_nova_5_init(struct device** device)
     device_arctis.capability_details[CAP_VOLUME_LIMITER]                 = (struct capability_detail) { .usagepage = 0xffc0, .usageid = 0x1, .interface = 3 };
     device_arctis.capability_details[CAP_EQUALIZER_PRESET]               = (struct capability_detail) { .usagepage = 0xffc0, .usageid = 0x1, .interface = 3 };
     device_arctis.capability_details[CAP_EQUALIZER]                      = (struct capability_detail) { .usagepage = 0xffc0, .usageid = 0x1, .interface = 3 };
+    device_arctis.capability_details[CAP_PARAMETRIC_EQUALIZER]           = (struct capability_detail) { .usagepage = 0xffc0, .usageid = 0x1, .interface = 3 };
 
     device_arctis.send_sidetone                       = &nova_5_send_sidetone;
     device_arctis.send_microphone_mute_led_brightness = &nova_5_send_microphone_mute_led_brightness;

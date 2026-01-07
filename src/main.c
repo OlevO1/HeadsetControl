@@ -1122,8 +1122,22 @@ int main(int argc, char* argv[])
 
             output(devices_found, print_capabilities != -1, output_format);
 
-            if (follow)
+            if (follow) {
+                // In follow mode, release resources between iterations.
+                // Keeping HID handles open (especially on Windows) can interfere with some devices.
+                for (int i = 0; i < headset_available; i++) {
+                    // Free any allocated messages from this iteration.
+                    for (int j = 0; j < numFeatures; j++) {
+                        free(devices_found[i].featureRequests[j].result.message);
+                        devices_found[i].featureRequests[j].result.message = NULL;
+                    }
+
+                    // Close HID handle + free path so we don't hold the interface open during sleep.
+                    terminate_device_hid(&device_handles[i], &hid_paths[i]);
+                }
+
                 sleep(follow_sec);
+            }
 
         } while (follow);
     }
